@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back Fill </title>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+    
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+    <script type="text/javascript" src="index.js" ></script>
+</head>
+<body>
+    <div>
+        <form id="data" action="/" method="POST">
+            <label for="emp" >EMPCODE</label>
+        <input class="" type="text" id="emp" name="emp" value="" required>
+
+        <label for="emp">Choose your Project:</label>
+        <input class="" type="text" id="projects" name="projects" value="" required>
+
+        <label for="date" >choose Date of leave:</label>
+        <input class="" type="text" id="date" name="daterange" value="" required>
+        
+        <label for="db">do your leave have a backfill : </label>
+        <select name="dbType" id="dbType">
+            <option >select</option>
+            <option value="yes">yes</option>
+            <option value="no">no</option>
+
+        </select><div id="otherType" style="display: none;">
+
+            <label for="emp" >EMPCODE of backfill</label>
+            <input class="" type="text" id="emp" name="empb" value="" >
+            
+            <label for="name of backfill">Enter name of a Backfill:</label>
+            <input class="" type="text" id="backfill" name="backfills" value="" >
+            
+        </div>
+        <!-- <button style="margin-top: 5px" id="btn">ADD</button> -->
+
+        <div>
+                <button style="margin-top: 5px" >Submit</button>
+            </div>
+    </form>
+
+    
+</div>
+
+
+    <script>
+        $(function() {
+            $('input[name="daterange"]').daterangepicker();
+            $('input[name="daterange"]').change(function(){
+            $(this).val();
+            console.log($(this).val());
+            });
+        }); 
+
+        $('#dbType').change(function(){
+            var selection = $(this).val();
+            if(selection == 'yes')
+            {
+                $('#otherType').show();
+            }
+            else
+            {
+                $('#otherType').hide();
+            }
+        });
+       
+    </script>
+</body>
+</html>
