@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,71 +10,166 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
-    
+
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
-    <script type="text/javascript" src="index.js" ></script>
+    <script type="text/javascript" src="app.js"></script>
 </head>
+
 <body>
     <div>
-        <form id="data" action="/" method="POST">
-            <label for="emp" >EMPCODE</label>
-        <input class="" type="text" id="emp" name="emp" value="" required>
+        <form id="data">
+            <label for="emp">EMPCODE</label>
+            <input class="" type="text" id="emp" name="emp" value="" required>
 
-        <label for="emp">Choose your Project:</label>
-        <input class="" type="text" id="projects" name="projects" value="" required>
+            <label for="emp">Choose your Project:</label>
+            <input class="" type="text" id="projects" name="projects" value="" required>
 
-        <label for="date" >choose Date of leave:</label>
-        <input class="" type="text" id="date" name="daterange" value="" required>
-        
-        <label for="db">do your leave have a backfill : </label>
-        <select name="dbType" id="dbType">
-            <option >select</option>
-            <option value="yes">yes</option>
-            <option value="no">no</option>
+            <label for="date">choose Date of leave:</label>
+            <input class="" type="text" id="date" name="daterange" value="" required>
 
-        </select><div id="otherType" style="display: none;">
+            <label for="db">do your leave have a backfill : </label>
+            <select name="dbType" id="dbType">
+                <option>select</option>
+                <option value="yes">yes</option>
+                <option value="no">no</option>
 
-            <label for="emp" >EMPCODE of backfill</label>
-            <input class="" type="text" id="emp" name="empb" value="" >
-            
-            <label for="name of backfill">Enter name of a Backfill:</label>
-            <input class="" type="text" id="backfill" name="backfills" value="" >
-            
-        </div>
-        <!-- <button style="margin-top: 5px" id="btn">ADD</button> -->
+            </select>
+            <div id="otherType" style="display: none;">
 
-        <div>
-                <button style="margin-top: 5px" >Submit</button>
+                <label for="emp">EMPCODE of backfill</label>
+                <input class="" type="text" id="backfillemp" name="empb" value="">
+
+                <label for="name of backfill">Enter name of a Backfill:</label>
+                <input class="" type="text" id="backfillname" name="backfills" value="">
+
             </div>
-    </form>
+            <!-- <button style="margin-top: 5px" id="btn">ADD</button> -->
 
-    
-</div>
+            <div>
+                <button style="margin-top: 5px" id="addBtn">Add</button>
+            </div>
+
+            <div class="container">
+                <ol id="toDoList"></ol>
+            </div>
+            <button type="submit" id="suball">Submit all</button>
+        </form>
+        <!-- 
+    <form>
+        <input id="input" type="text">
+        <button id="get">GET</button>
+        <button id="post">POST</button>
+    </form> -->
+    </div>
 
 
     <script>
-        $(function() {
-            $('input[name="daterange"]').daterangepicker();
-            $('input[name="daterange"]').change(function(){
-            $(this).val();
-            console.log($(this).val());
-            });
-        }); 
 
-        $('#dbType').change(function(){
-            var selection = $(this).val();
-            if(selection == 'yes')
+        // const getBtn = document.getElementById('get');
+        // const postBtn = document.getElementById('post'); 
+        // const input = document.getElementById('input');
+        var todos = [];
+
+        const addBtn = document.getElementById('addBtn');
+        const suball = document.getElementById('suball');
+
+        const baseUrl = 'http://localhost:8000/'
+
+        // getBtn.addEventListener('click',getInfo);
+        // postBtn.addEventListener('click',postInfo);
+
+        addBtn.addEventListener('click', addInfo);
+        suball.addEventListener('click', postInfo);
+
+        async function getInfo(e) {
+            e.preventDefault();
+            const res = await fetch(baseUrl + 'info', {
+                method: 'GET'
+            })
+            console.log(res);
+
+            const data = await res.json();
+            input.value = data.info;
+        }
+
+        function addInfo(e) {
+            e.preventDefault();
+            let emp = document.getElementById('emp').value;
+            let projects = document.getElementById('projects').value;
+            let date = document.getElementById('date').value;
+            let backfillemp = document.getElementById('backfillemp').value;
+            let backfillname = document.getElementById('backfillname').value;
+            var list = document.getElementById("toDoList");
+            list.innerHTML = "";
+            let data = {
+                "emp": emp,
+                "projects": projects,
+                "date": date,
+                "backfillemp": backfillemp,
+                "backfillname": backfillname,
+            };
+
+            // console.log(data)
+            todos.push(data);
+
+            var item = document.createElement("li");
+            for (var i = 0; i < todos.length; i++) {
+                var listItem = document.createTextNode(todos[i]);
+                var li = document.createElement("li");
+
+                li.appendChild(document.createTextNode(" " + todos[i].emp));
+                li.appendChild(document.createTextNode(" " + todos[i].projects));
+                li.appendChild(document.createTextNode(" " + todos[i].date));
+                li.appendChild(document.createTextNode(" " + todos[i].backfillemp));
+                li.appendChild(document.createTextNode(" " + todos[i].backfillname));
+                list.append(li);
+            }
+            console.log("todos " +todos);
+
+            function take()
             {
+                return this.todos;
+            }
+
+
+        }
+
+        async function postInfo(e) {
+            e.preventDefault();
+            console.log("got inside post " + todos);
+            const res = await fetch(baseUrl, {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    parcel: todos
+                })
+                
+            })
+        }
+
+        $(function () {
+            $('input[name="daterange"]').daterangepicker();
+            $('input[name="daterange"]').change(function () {
+                $(this).val();
+                console.log($(this).val());
+            });
+        });
+
+        $('#dbType').change(function () {
+            var selection = $(this).val();
+            if (selection == 'yes') {
                 $('#otherType').show();
             }
-            else
-            {
+            else {
                 $('#otherType').hide();
             }
         });
-       
+
+
+
     </script>
 </body>
+
 </html>
