@@ -23,20 +23,32 @@ app.get('/info', function(req, res){
 //  res.sendFile("index.html"); 
 });
 
-app.post('/',(req,res)=>{
+mongoose.connect('mongodb://localhost:27017/mydb');
+var db = mongoose.connection;
+
+db.on('error',()=>console.log("error"));
+db.once('open',()=>console.log("connected"));
+
+app.post('/api',(req,res)=>{
     const parcel = req.body;
-    console.log(parcel);
+    console.log("got in app.js " + parcel['parcel']);
     if(!parcel){
         res.status(400).send({status : "invalid request"});
         return;
     }
-    res.status(200).send({status:'received'})
-})
-// mongoose.connect('mongodb://localhost:27017/mydb');
-// var db = mongoose.connection;
+    res.status(200).send({status:'received'});
 
-// db.on('error',()=>console.log("error"));
-// db.once('open',()=>console.log("connected"));
+    Array.from(parcel['parcel'], child => {
+      // console.log(child);
+      db.collection('users').insertOne(child,(err,collection)=>{
+                    if(err){
+                        throw err;
+                    }
+                    console.log("record inserted");
+                });
+    });
+
+});
 
 
 // app.post("/", (req,res)=>{

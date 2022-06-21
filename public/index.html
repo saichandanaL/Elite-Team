@@ -62,6 +62,8 @@
         <button id="get">GET</button>
         <button id="post">POST</button>
     </form> -->
+
+    
     </div>
 
 
@@ -126,26 +128,24 @@
                 li.appendChild(document.createTextNode(" " + todos[i].backfillname));
                 list.append(li);
             }
-            console.log("todos " +todos);
+            console.log("todos " + todos);
 
-            function take()
-            {
+            function take() {
                 return this.todos;
             }
-
 
         }
 
         async function postInfo(e) {
             e.preventDefault();
             console.log("got inside post " + todos);
-            const res = await fetch(baseUrl, {
+            fetch('/api', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     parcel: todos
                 })
-                
+
             })
         }
 
@@ -166,8 +166,6 @@
                 $('#otherType').hide();
             }
         });
-
-
 
     </script>
 </body>
