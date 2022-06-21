@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
     <script type="text/javascript" src="app.js"></script>
+
 </head>
 
 <body>
@@ -56,31 +57,20 @@
             </div>
             <button type="submit" id="suball">Submit all</button>
         </form>
-        <!-- 
-    <form>
-        <input id="input" type="text">
-        <button id="get">GET</button>
-        <button id="post">POST</button>
-    </form> -->
 
-    
+        <a href="./home.html">admin</a>
+
     </div>
 
 
     <script>
 
-        // const getBtn = document.getElementById('get');
-        // const postBtn = document.getElementById('post'); 
-        // const input = document.getElementById('input');
         var todos = [];
 
         const addBtn = document.getElementById('addBtn');
         const suball = document.getElementById('suball');
 
         const baseUrl = 'http://localhost:8000/'
-
-        // getBtn.addEventListener('click',getInfo);
-        // postBtn.addEventListener('click',postInfo);
 
         addBtn.addEventListener('click', addInfo);
         suball.addEventListener('click', postInfo);
@@ -166,6 +156,8 @@
                 $('#otherType').hide();
             }
         });
+
+    </script>
 
     </script>
 </body>
