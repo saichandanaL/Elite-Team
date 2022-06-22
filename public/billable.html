@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+</head>
+
+<body>
+
+
+    <form>
+
+        <input id="empcode" type="text" placeholder="enter your empcode">
+        <button id="fetch">fetch projects</button>
+        <select name="select" id="select">
+            <option>select</option>
+        </select>
+        <button id="submitData">Ok</button>
+
+        
+
+    </form>
+    <div>
+        <form>
+            <p>Project name</p>
+            <label for="date">choose Date of leave:</label>
+            <input type="text" id="date" name="daterange" value="" required>
+            <label for="date">No of hours:</label>
+            <select name="select" id="dbType">
+                <option>select</option>
+                <option>Full Day</option>
+                <option>Half Day</option>
+                <option value="yes">other</option>
+                <input type="number" id="hidden" value="c1"  style="display: none;">
+            </select>
+            <button>submit</button>
+        </form>
+    </div>
+
+    <script>
+        const baseUrl = 'http://localhost:8000/dataOfProject';
+
+        const code = document.getElementById('empcode');
+        const fetchData = document.getElementById('fetch');
+
+        const select = document.getElementById('select');
+
+        fetchData.addEventListener('click', (e) => {
+            e.preventDefault();
+            const emp = code.value;
+
+            if (emp === '101') {
+                $.get(baseUrl, {}, function (data) {
+                    console.log("getting");
+                    console.log(data);
+                    for (var i = 1; i <= data.length; i++) {
+                        var option = '<option value="' + i + '" >' + data[i - 1] + '</option>';
+                        select.insertAdjacentHTML('beforeend', option);
+                    }
+                });
+
+            }
+        })
+
+        const submitData = document.getElementById('submitData');
+
+        submitData.addEventListener('click',(e)=>{
+            e.preventDefault();
+
+
+        })
+
+        $(function () {
+            $('input[name="daterange"]').daterangepicker();
+            $('input[name="daterange"]').change(function () {
+                $(this).val();
+                console.log($(this).val());
+            });
+        });
+
+        $('#dbType').change(function () {
+            var selection = $(this).val();
+            if (selection == 'yes') {
+                $('#hidden').show();
+            }
+            else {
+                $('#hidden').hide();
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>

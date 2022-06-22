@@ -42,6 +42,22 @@ app.get('/data', function (req, res) {
         res.send(resultArray);
     })
 });
+
+//for emp projects
+app.get('/dataOfProject', function (req, res) {
+    // res.send('hello world'); //replace with your data here
+    var resultArray = [];
+    var query = {"emp" :"101"};
+    let cursor = db.collection('users').find(query);
+    cursor.forEach(function (doc, err) {
+        resultArray.push(doc["projects"]);
+    }, function () {
+        // db.close();
+        console.log("completed" + resultArray);
+        res.send(resultArray);
+    })
+});
+
 app.post('/api', (req, res) => {
     const parcel = req.body;
     console.log("got in app.js " + parcel['parcel']);

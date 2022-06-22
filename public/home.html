@@ -14,8 +14,6 @@
   <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
-  <!-- <link rel="stylesheet" href="css/style.css"> -->
-  <script src="../admin.js"></script>
 </head>
 <style>
   nav{
@@ -56,17 +54,7 @@
   </div>
 
   <script>
-    // const generate = document.getElementById('generate');
     const baseUrl = 'http://localhost:8000/data';
-
-    // generate.addEventListener('click', getInfo());
-
-    // async function getInfo() {
-    //   const res = await fetch(baseUrl, {
-    //     method: 'GET'
-    //   })
-    //   console.log(res);
-    // }
 
     $('#generate').click(function () {
       $.get(baseUrl, {}, function (data) {
@@ -80,7 +68,6 @@
     function convertJsontoHtmlTable(data) {
 
       //Getting value for table header
-      // {'EmployeeID', 'EmployeeName', 'Address' , 'City','Country'}
       var tablecolumns = [];
       for (var i = 0; i < data.length; i++) {
         for (var key in data[i]) {
