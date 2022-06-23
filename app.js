@@ -43,11 +43,26 @@ app.get('/data', function (req, res) {
     })
 });
 
-//for emp projects
-app.get('/dataOfProject', function (req, res) {
+//for data of billable
+app.get('/Billabledata', function (req, res) {
     // res.send('hello world'); //replace with your data here
     var resultArray = [];
-    var query = {"emp" :"101"};
+    let cursor = db.collection('Billable').find({});
+    cursor.forEach(function (doc, err) {
+        resultArray.push(doc);
+    }, function () {
+        // db.close();
+        console.log("completed" + resultArray);
+        res.send(resultArray);
+    })
+});
+
+//for emp projects
+app.get('/dataOfProject/:emp', function (req, res) {
+    // res.send('hello world'); //replace with your data here
+    const emp = req.params.emp;
+    var resultArray = [];
+    var query = {"emp" : emp};
     let cursor = db.collection('users').find(query);
     cursor.forEach(function (doc, err) {
         resultArray.push(doc["projects"]);
@@ -78,6 +93,26 @@ app.post('/api', (req, res) => {
     });
 
 });
+
+
+app.post('/submitBillableData', (req, res) => {
+    const parcel = req.body;
+    console.log("got in app.js " + parcel);
+    if (!parcel) {
+        res.status(400).send({ status: "invalid request" });
+        return;
+    }
+    res.status(200).send({ status: 'received' });
+
+    
+    db.collection('Billable').insertOne(parcel['fullData'], (err, collection) => {
+            if (err) {
+                throw err;
+            }
+            console.log("record inserted");
+        });
+    });
+
 
 
 app.listen(port);

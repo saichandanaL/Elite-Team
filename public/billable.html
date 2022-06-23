@@ -14,6 +14,11 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
+    <style>
+        body{
+            margin: 10%;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,21 +36,25 @@
         
 
     </form>
-    <div>
+    <div id="fillform" style="display: none;">
         <form>
-            <p>Project name</p>
+            <p id="projectname"></p>
             <label for="date">choose Date of leave:</label>
             <input type="text" id="date" name="daterange" value="" required>
             <label for="date">No of hours:</label>
-            <select name="select" id="dbType">
-                <option>select</option>
-                <option>Full Day</option>
-                <option>Half Day</option>
+            <select name="select" id="hour">
+                <option value="8">Full Day</option>
+                <option value="4">Half Day</option>
                 <option value="yes">other</option>
-                <input type="number" id="hidden" value="c1"  style="display: none;">
+                <input type="number" min=1 max=7 id="hidden" style="display: none;">
             </select>
-            <button>submit</button>
+            <button id="submitBillableData">submit</button>
         </form>
+    </div>
+    <div>
+
+        <button style="margin-top: 10px" id="prevpage"><a href="./index.html">Back</a></button>
+
     </div>
 
     <script>
@@ -55,17 +64,20 @@
         const fetchData = document.getElementById('fetch');
 
         const select = document.getElementById('select');
-
+        
+        let data1 ;
+        let emp;
+        let val;
         fetchData.addEventListener('click', (e) => {
             e.preventDefault();
-            const emp = code.value;
-
-            if (emp === '101') {
-                $.get(baseUrl, {}, function (data) {
+            emp = code.value;
+            if (emp) {
+                $.get(baseUrl+"/"+emp, {}, function (data) {
                     console.log("getting");
                     console.log(data);
+                    data1 = data;
                     for (var i = 1; i <= data.length; i++) {
-                        var option = '<option value="' + i + '" >' + data[i - 1] + '</option>';
+                        var option = '<option value="' + data[i - 1] + '" >' + data[i - 1] + '</option>';
                         select.insertAdjacentHTML('beforeend', option);
                     }
                 });
@@ -77,7 +89,11 @@
 
         submitData.addEventListener('click',(e)=>{
             e.preventDefault();
-
+            val = document.getElementById('select').value;
+            val;
+            const projectname = document.getElementById('projectname');
+            projectname.innerHTML = val;
+            $('#fillform').show();
 
         })
 
@@ -89,7 +105,7 @@
             });
         });
 
-        $('#dbType').change(function () {
+        $('#hour').change(function () {
             var selection = $(this).val();
             if (selection == 'yes') {
                 $('#hidden').show();
@@ -99,7 +115,39 @@
             }
         });
 
+        const submitBillableData = document.getElementById('submitBillableData');
 
+        submitBillableData.addEventListener('click',
+
+        async function SubmitBillableDatafunction(e) {
+            e.preventDefault();
+            let date = document.getElementById('date').value;
+            let hours = document.getElementById('hour').value;
+            let hidden;
+            if(hours!=="" && hours==="yes")
+            {
+                hidden = document.getElementById('hidden').value;
+            }
+            else{
+                hidden = hours;
+            }
+            console.log("got inside post " + emp + " " + val + " " + date + " " + hidden);
+            let fullData = {
+                "emp":emp,
+                "projectname" : val,
+                "date":date,
+                "hours":hidden
+            }
+
+            fetch('/submitBillableData', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    fullData
+                })
+
+            })
+        })
     </script>
 </body>
 
