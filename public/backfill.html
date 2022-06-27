@@ -18,6 +18,15 @@
     <style>
         body{
             margin-top: 30px;
+            background-image: url('loginpoto.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;
+            font-size: 18px;
+            color: black;
+        }
+        ol li{
+            list-style-type: none;
         }
     </style>
 
@@ -30,29 +39,30 @@
     <div class="col-lg-12 bg-light text-center">
         
         <form id="data">
-            <label for="emp">EMPCODE</label>
-            <input class="" type="text" id="emp" name="emp" value="" required>
+            <label for="emp">EMPCODE:</label>
+            <input class="" type="text" id="emp" placeholder="Enter your Empcode" name="emp" value="" required >
 
-            <label for="emp">Choose your Project:</label>
-            <input class="" type="text" id="projects" name="projects" value="" required>
+            <label for="emp">Enter your Project:</label>
+            <input class="" type="text" id="projects" placeholder="Enter Project Name"name="projects" value="" required>
 
-            <label for="date">choose Date of leave:</label>
+            <label for="date">Choose Date of leave:</label>
             <input class="" type="text" id="date" name="daterange" value="" required>
 
-            <label for="db">do your leave have a backfill : </label>
+            <label for="db">Do you have a backfill : </label>
             <select name="dbType" id="dbType">
                 <option>select</option>
                 <option value="yes">yes</option>
                 <option value="no">no</option>
-
             </select>
+
             <div id="otherType" style="display: none;">
 
+                <br>
                 <label for="emp">EMPCODE of backfill</label>
-                <input class="" type="text" id="backfillemp" name="empb" value="">
+                <input class="" type="text" id="backfillemp"placeholder="Enter BackFill EMPCODE" name="empb" value="">
 
-                <label for="name of backfill">Enter name of a Backfill:</label>
-                <input class="" type="text" id="backfillname" name="backfills" value="">
+                <label for="name of backfill">Enter Backfill Name:</label>
+                <input class="" type="text" id="backfillname" placeholder="Enter BackFill Name"name="backfills" value="">
 
             </div>
             <!-- <button style="margin-top: 5px" id="btn">ADD</button> -->
@@ -119,7 +129,7 @@
                 var listItem = document.createTextNode(todos[i]);
                 var li = document.createElement("li");
 
-                li.appendChild(document.createTextNode(" " + todos[i].emp));
+                li.appendChild(document.createTextNode(i+1 + ". " + todos[i].emp));
                 li.appendChild(document.createTextNode(" " + todos[i].projects));
                 li.appendChild(document.createTextNode(" " + todos[i].date));
                 li.appendChild(document.createTextNode(" " + todos[i].backfillemp));
@@ -161,6 +171,8 @@
                 $('#otherType').show();
             }
             else {
+                document.getElementById('backfillemp').value='';
+                document.getElementById('backfillname').value='';
                 $('#otherType').hide();
             }
         });

@@ -17,16 +17,29 @@
     <style>
         body{
             margin: 10%;
+            background-image: url('loginpoto.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;
+            font-size: 18px;
+            color: black;
         }
     </style>
 </head>
 
 <body>
+    <div>
 
+        <button style="margin-top: 10px" id="prevpage"><a href="./index.html">Back</a></button>
+
+    </div>
+    <br>
 
     <form>
 
-        <input id="empcode" type="text" placeholder="enter your empcode">
+    
+
+        <input id="empcode" type="text" placeholder="Enter your Empcode">
         <button id="fetch">fetch projects</button>
         <select name="select" id="select">
             <option>select</option>
@@ -51,11 +64,7 @@
             <button id="submitBillableData">submit</button>
         </form>
     </div>
-    <div>
-
-        <button style="margin-top: 10px" id="prevpage"><a href="./index.html">Back</a></button>
-
-    </div>
+    
 
     <script>
         const baseUrl = 'http://localhost:8000/dataOfProject';

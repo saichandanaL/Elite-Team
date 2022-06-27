@@ -7,25 +7,49 @@
     <title>Home</title>
     <style>
 
-        #body {
+        body {
             display: block;
+            /* margin-top: 20%; */
+            /* margin-left: 40%; */
+            font-size: 24px;    
+            background-image: url('loginpoto.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;
+        }
+        #body{
             margin-top: 20%;
-            margin-left: 50%;
-    
+            margin-left: 40%;
         }
         a{
             text-decoration: none;
         }
+        button{
+            font-size: 24px;
+        }
+        #logo{
+            float:left;
+            margin-top: 10px;
+            
+        }
     </style>
 </head>
 <body>
+    <div>
+    <nav id="logo">
+        <img src="triconsymbl.png">
+    </nav>
+</div>
+<br>
     <div id="body">
-
+        <label >Enter BackFill Details--> </label>
         <button><a id="backfill" href="./backfill.html">Backfill</a></button><br>
         <br>
+        <label>Backfill's Fill Details-->  </label>
         <button id="billable" ><a href="./billable.html">Billable projects</a></button>
         <br>
         <br>
+        <label>Admin Access Only--></label>
         <button><a href="./adminLogin.html">Admin</a></button>
 
     </div>
