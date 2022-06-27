@@ -42,7 +42,7 @@
     </div>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <!-- <h1 class="nav-link" href="#" style="margin-left: 200px;">Tricon<span class="sr-only">(current)</span></h1> -->
+          
          
         </li>
       </ul>
@@ -82,7 +82,7 @@
 
     function convertJsontoHtmlTable(data) {
 
-      //Getting value for table header
+      
       var tablecolumns = [];
       for (var i = 0; i < data.length; i++) {
         for (var key in data[i]) {
@@ -91,15 +91,14 @@
           }
         }
       }
-      //Creating html table and adding class to it
+     
       var tableemployee = document.createElement("table");
       tableemployee.classList.add("table");
       tableemployee.classList.add("table-striped");
       tableemployee.classList.add("table-bordered");
       tableemployee.classList.add("table-hover")
 
-      //Creating header of the HTML table using
-      //tr
+      
       var tr = tableemployee.insertRow(-1);
       for (var i = 1; i < tablecolumns.length; i++) {
         //header
@@ -107,7 +106,8 @@
         th.innerHTML = tablecolumns[i];
         tr.appendChild(th);
       }
-      // Add employee JSON data in table as tr or rows
+   
+      
       for (var i = 0; i < data.length; i++) {
         tr = tableemployee.insertRow(-1);
         for (var j = 1; j < tablecolumns.length; j++) {
@@ -116,7 +116,8 @@
         }
       }
 
-      //Final step , append html table to the container div
+      
+      
       var employeedivcontainer = document.getElementById("employeedivcontainer");
       employeedivcontainer.innerHTML = "";
       employeedivcontainer.appendChild(tableemployee);
@@ -135,7 +136,8 @@
 
     function convertJsontoHtmlTable(data) {
 
-      //Getting value for table header
+      
+      
       var tablecolumns = [];
       for (var i = 0; i < data.length; i++) {
         for (var key in data[i]) {
@@ -144,23 +146,23 @@
           }
         }
       }
-      //Creating html table and adding class to it
+     
+      
       var tableemployee = document.createElement("table");
       tableemployee.classList.add("table");
       tableemployee.classList.add("table-striped");
       tableemployee.classList.add("table-bordered");
       tableemployee.classList.add("table-hover")
 
-      //Creating header of the HTML table using
-      //tr
+     
       var tr = tableemployee.insertRow(-1);
       for (var i = 1; i < tablecolumns.length; i++) {
-        //header
         var th = document.createElement("th");
         th.innerHTML = tablecolumns[i];
         tr.appendChild(th);
       }
-      // Add employee JSON data in table as tr or rows
+      
+      
       for (var i = 0; i < data.length; i++) {
         tr = tableemployee.insertRow(-1);
         for (var j = 1; j < tablecolumns.length; j++) {
@@ -169,7 +171,8 @@
         }
       }
 
-      //Final step , append html table to the container div
+      
+      
       var employeedivcontainer = document.getElementById("employeedivcontainer");
       employeedivcontainer.innerHTML = "";
       employeedivcontainer.appendChild(tableemployee);
@@ -180,14 +183,16 @@
       var printWindow = window.open('', '', 'height=200,width=400');
       printWindow.document.write('<html><head><title>Table Contents</title>');
 
-      //Print the Table CSS.
+     
+        
       var table_style = document.getElementById("table_style").innerHTML;
       printWindow.document.write('<style type = "text/css">');
       printWindow.document.write(table_style);
       printWindow.document.write('</style>');
       printWindow.document.write('</head>');
 
-      //Print the DIV contents i.e. the HTML Table.
+      
+      
       printWindow.document.write('<body>');
       var divContents = document.getElementById("dvContents").innerHTML;
       printWindow.document.write(divContents);

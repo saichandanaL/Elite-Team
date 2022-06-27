@@ -31,35 +31,35 @@ db.on('error', () => console.log("error"));
 db.once('open', () => console.log("connected"));
 
 app.get('/data', function (req, res) {
-    // res.send('hello world'); //replace with your data here
+
     var resultArray = [];
     let cursor = db.collection('users').find({});
     cursor.forEach(function (doc, err) {
         resultArray.push(doc);
     }, function () {
-        // db.close();
+        
         console.log("completed" + resultArray);
         res.send(resultArray);
     })
 });
 
-//for data of billable
+
 app.get('/Billabledata', function (req, res) {
-    // res.send('hello world'); //replace with your data here
+    
     var resultArray = [];
     let cursor = db.collection('Billable').find({});
     cursor.forEach(function (doc, err) {
         resultArray.push(doc);
     }, function () {
-        // db.close();
+        
         console.log("completed" + resultArray);
         res.send(resultArray);
     })
 });
 
-//for emp projects
+
 app.get('/dataOfProject/:emp', function (req, res) {
-    // res.send('hello world'); //replace with your data here
+   
     const emp = req.params.emp;
     var resultArray = [];
     var query = {"emp" : emp};
@@ -67,7 +67,7 @@ app.get('/dataOfProject/:emp', function (req, res) {
     cursor.forEach(function (doc, err) {
         resultArray.push(doc["projects"]);
     }, function () {
-        // db.close();
+      
         console.log("completed" + resultArray);
         res.send(resultArray);
     })
@@ -83,7 +83,7 @@ app.post('/api', (req, res) => {
     res.status(200).send({ status: 'received' });
 
     Array.from(parcel['parcel'], child => {
-        // console.log(child);
+        
         db.collection('users').insertOne(child, (err, collection) => {
             if (err) {
                 throw err;
