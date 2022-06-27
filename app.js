@@ -24,7 +24,7 @@ app.get('/info', function (req, res) {
     res.sendFile("../admin.js");
 });
 
-mongoose.connect('mongodb://localhost:27017/mydb');
+mongoose.connect('mongodb+srv://jasmine:password11@cluster0.nlkkq.mongodb.net/test');
 var db = mongoose.connection;
 
 db.on('error', () => console.log("error"));
