@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        body {
+            display: grid;
+            justify-content: center;
+            margin-top: 3%;
+            background-image: url('loginpoto.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;
+
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+            
+        }
+
+        #center {
+            padding: 20px;
+            border-radius: 5%;
+            border: 4px solid blue;
+        }
+
+        #prevpage{
+            display: block;
+            float: left;
+            margin-bottom: 20px;
+            
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+            font-size: 15px;
+            border-color: none;
+        }
+        #tricon{
+            float: left;
+            height: 10;
+            width: 10;
+        }
+    </style>
+</head>
+
+<body>
+        
+    <div id="prevpage">
+        <button style="margin-top: 10px ; background-color: rgb(166, 94, 233);"><a href="./index.html">Back</a></button>
+    </div>
+
+    <div id="center">
+        <div class="imgcontainer">
+            <img src="admin.png" alt="Avatar" class="avatar">
+        </div><br>
+        <form id="LoginInfo" >
+            <label for="name" style="font-weight:bold;">Admin Name</label>
+            <br>
+            <input id="username" placeholder="UserName"name="username" type="text"><br><br>
+
+            <label for="pass" style="font-weight:bold;">Password</label>
+            <br>
+            <input id="pass" placeholder="Password"name="password" type="password">
+            <br>
+            <br>
+            <button id="btn" >Login</button>
+        </form>
+    </div>
+
+
+</body>
+<script>
+    const username = document.getElementById("username");
+    const pass = document.getElementById("pass");
+    const btn = document.getElementById("btn");
+
+btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const username1 = username.value;
+    const password1 = pass.value;
+    if (username1 === "123" && password1 === "123") {
+        
+        location.href = "./home.html"
+    } else {
+        alert("wrong");
+        
+    }
+})
+</script>
+
+</html>

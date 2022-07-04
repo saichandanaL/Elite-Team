@@ -1,0 +1,219 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Export Data</title>
+  <link rel="stylesheet" href="https://bootswatch.com/4/lumen/bootstrap.css">
+  <link rel="stylesheet" href="https://bootswatch.com/_assets/css/custom.min.css">
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+
+  <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+</head>
+<style>
+  nav{
+    background-image: url('loginpoto.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;;
+  }
+  body {
+    padding-top: 0px;
+    background-image: url('loginpoto.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;
+            font-size: 18px;
+            color: black;
+}
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <div>
+        <button style="margin-top: 10px; float: left;" id="prevpage"><a href="./index.html">Back</a></button>
+    </div>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          
+         
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <div>
+      <button id="generate">Generate BackFill Data</button>
+      <button id="generateBillableData">Generate Billable Data</button>
+
+    </div>
+   
+    <div class="container">
+      <h1>Employee Data</h1>
+      <br />
+      <div id="employeedivcontainer">
+
+      </div>
+    </div>
+    <div>
+      <button onclick="myApp.printTable()">Print Data</button>
+    </div>
+  </div>
+  
+
+  <script>
+    const baseUrl = 'http://localhost:8000/data';
+
+    $('#generate').click(function () {
+      $.get(baseUrl, {}, function (data) {
+        console.log(data);
+
+        convertJsontoHtmlTable(data);
+      });
+    });
+
+
+    function convertJsontoHtmlTable(data) {
+
+      
+      var tablecolumns = [];
+      for (var i = 0; i < data.length; i++) {
+        for (var key in data[i]) {
+          if (tablecolumns.indexOf(key) === -1) {
+            tablecolumns.push(key);
+          }
+        }
+      }
+     
+      var tableemployee = document.createElement("table");
+      tableemployee.classList.add("table");
+      tableemployee.classList.add("table-striped");
+      tableemployee.classList.add("table-bordered");
+      tableemployee.classList.add("table-hover")
+
+      
+      var tr = tableemployee.insertRow(-1);
+      for (var i = 1; i < tablecolumns.length; i++) {
+        //header
+        var th = document.createElement("th");
+        th.innerHTML = tablecolumns[i];
+        tr.appendChild(th);
+      }
+   
+      
+      for (var i = 0; i < data.length; i++) {
+        tr = tableemployee.insertRow(-1);
+        for (var j = 1; j < tablecolumns.length; j++) {
+          var tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = data[i][tablecolumns[j]];
+        }
+      }
+
+      
+      
+      var employeedivcontainer = document.getElementById("employeedivcontainer");
+      employeedivcontainer.innerHTML = "";
+      employeedivcontainer.appendChild(tableemployee);
+    }
+
+    const baseUrl1 = 'http://localhost:8000/Billabledata';
+
+    $('#generateBillableData').click(function () {
+      $.get(baseUrl1, {}, function (data) {
+        console.log(data);
+
+        convertJsontoHtmlTable(data);
+      });
+    });
+
+
+    function convertJsontoHtmlTable(data) {
+
+      
+      
+      var tablecolumns = [];
+      for (var i = 0; i < data.length; i++) {
+        for (var key in data[i]) {
+          if (tablecolumns.indexOf(key) === -1) {
+            tablecolumns.push(key);
+          }
+        }
+      }
+     
+      
+      var tableemployee = document.createElement("table");
+      tableemployee.classList.add("table");
+      tableemployee.classList.add("table-striped");
+      tableemployee.classList.add("table-bordered");
+      tableemployee.classList.add("table-hover")
+
+     
+      var tr = tableemployee.insertRow(-1);
+      for (var i = 1; i < tablecolumns.length; i++) {
+        var th = document.createElement("th");
+        th.innerHTML = tablecolumns[i];
+        tr.appendChild(th);
+      }
+      
+      
+      for (var i = 0; i < data.length; i++) {
+        tr = tableemployee.insertRow(-1);
+        for (var j = 1; j < tablecolumns.length; j++) {
+          var tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = data[i][tablecolumns[j]];
+        }
+      }
+
+      
+      
+      var employeedivcontainer = document.getElementById("employeedivcontainer");
+      employeedivcontainer.innerHTML = "";
+      employeedivcontainer.appendChild(tableemployee);
+    }
+
+
+    function PrintTable() {
+      var printWindow = window.open('', '', 'height=200,width=400');
+      printWindow.document.write('<html><head><title>Table Contents</title>');
+
+     
+        
+      var table_style = document.getElementById("table_style").innerHTML;
+      printWindow.document.write('<style type = "text/css">');
+      printWindow.document.write(table_style);
+      printWindow.document.write('</style>');
+      printWindow.document.write('</head>');
+
+      
+      
+      printWindow.document.write('<body>');
+      var divContents = document.getElementById("dvContents").innerHTML;
+      printWindow.document.write(divContents);
+      printWindow.document.write('</body>');
+
+      printWindow.document.write('</html>');
+      printWindow.document.close();
+      printWindow.print();
+    }
+
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('employeedivcontainer');
+            var win = window.open('', '', 'height=700,width=700');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+
+  </script>
+</body>
+
+</html>

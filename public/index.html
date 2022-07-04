@@ -4,76 +4,59 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Back Fill </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300&display=swap" rel="stylesheet">
+    <title>Home</title>
+    <style>
 
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
-    
-    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
-    <script type="text/javascript" src="index.js" ></script>
+        body {
+            display: block;
+            font-size: 24px;    
+            background-image: url('loginpoto.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+        #body{
+            margin-top: 20%;
+            margin-left: 32%;
+            background-color: rgb(255, 255, 255,0.4);
+            padding: 2%;
+            margin-right: 32%;
+        }
+        a{
+            text-decoration: none;
+        }
+        button{
+            font-size: 24px;
+        }
+        #logo{
+            float:left;
+            margin-top: 10px;
+            
+        }
+    </style>
 </head>
 <body>
     <div>
-        <form id="data" action="/" method="POST">
-            <label for="emp" >EMPCODE</label>
-        <input class="" type="text" id="emp" name="emp" value="" required>
-
-        <label for="emp">Choose your Project:</label>
-        <input class="" type="text" id="projects" name="projects" value="" required>
-
-        <label for="date" >choose Date of leave:</label>
-        <input class="" type="text" id="date" name="daterange" value="" required>
-        
-        <label for="db">do your leave have a backfill : </label>
-        <select name="dbType" id="dbType">
-            <option >select</option>
-            <option value="yes">yes</option>
-            <option value="no">no</option>
-
-        </select><div id="otherType" style="display: none;">
-
-            <label for="emp" >EMPCODE of backfill</label>
-            <input class="" type="text" id="emp" name="empb" value="" >
-            
-            <label for="name of backfill">Enter name of a Backfill:</label>
-            <input class="" type="text" id="backfill" name="backfills" value="" >
-            
-        </div>
-        <!-- <button style="margin-top: 5px" id="btn">ADD</button> -->
-
-        <div>
-                <button style="margin-top: 5px" >Submit</button>
-            </div>
-    </form>
-
-    
+    <nav id="logo">
+        <img src="triconsymbl.png">
+    </nav>
 </div>
+<br>
+    <div id="body">
+        <label style="font-weight: bold;">Enter BackFill Details➡️</label>
+        <button><a id="backfill" href="./backfill.html">Backfill</a></button><br>
+        <br>
+        <label style="font-weight: bold;">Billable Project Details➡️</label>
+        <button id="billable" ><a href="./billable.html">Billable projects</a></button>
+        <br>
+        <br>
+        <label style="font-weight: bold;">Admin Access Only➡️</label>
+        <button><a href="./adminLogin.html">Admin</a></button>
 
-
-    <script>
-        $(function() {
-            $('input[name="daterange"]').daterangepicker();
-            $('input[name="daterange"]').change(function(){
-            $(this).val();
-            console.log($(this).val());
-            });
-        }); 
-
-        $('#dbType').change(function(){
-            var selection = $(this).val();
-            if(selection == 'yes')
-            {
-                $('#otherType').show();
-            }
-            else
-            {
-                $('#otherType').hide();
-            }
-        });
-       
-    </script>
+    </div>
 </body>
 </html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+    <style>
+        body{
+            margin: 10%;
+            background-image: url('loginpoto.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;
+            font-size: 18px;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+
+        <button style="margin-top: 10px" id="prevpage"><a href="./index.html">Back</a></button>
+
+    </div>
+    <br>
+
+    <form>
+
+    
+
+        <input id="empcode" type="text" placeholder="Enter your Empcode">
+        <button id="fetch">fetch projects</button>
+        <select name="select" id="select">
+            <option>select</option>
+        </select>
+        <button id="submitData">Ok</button>
+
+        
+
+    </form>
+    <div id="fillform" style="display: none;">
+        <form>
+            <p id="projectname"></p>
+            <label for="date">Choose Date of work:</label>
+            <input type="text" id="date" name="daterange" value="" required>
+            <label for="date">No of hours:</label>
+            <select name="select" id="hour">
+                <option value="8">Full Day</option>
+                <option value="4">Half Day</option>
+                <option value="yes">other</option>
+                <input type="number" min=1 max=7 id="hidden" style="display: none;">
+            </select>
+            <button id="submitBillableData">submit</button>
+        </form>
+    </div>
+    
+
+    <script>
+        const baseUrl = 'http://localhost:8000/dataOfProject';
+
+        const code = document.getElementById('empcode');
+        const fetchData = document.getElementById('fetch');
+
+        const select = document.getElementById('select');
+        
+        let data1 ;
+        let emp;
+        let val;
+        fetchData.addEventListener('click', (e) => {
+            e.preventDefault();
+            emp = code.value;
+            if (emp) {
+                $.get(baseUrl+"/"+emp, {}, function (data) {
+                    console.log("getting");
+                    console.log(data);
+                    data1 = data;
+                    for (var i = 1; i <= data.length; i++) {
+                        var option = '<option value="' + data[i - 1] + '" >' + data[i - 1] + '</option>';
+                        select.insertAdjacentHTML('beforeend', option);
+                    }
+                });
+
+            }
+        })
+
+        const submitData = document.getElementById('submitData');
+
+        submitData.addEventListener('click',(e)=>{
+            e.preventDefault();
+            val = document.getElementById('select').value;
+            val;
+            const projectname = document.getElementById('projectname');
+            projectname.innerHTML = val;
+            $('#fillform').show();
+
+        })
+
+        $(function () {
+            $('input[name="daterange"]').daterangepicker();
+            $('input[name="daterange"]').change(function () {
+                $(this).val();
+                console.log($(this).val());
+            });
+        });
+
+        $('#hour').change(function () {
+            var selection = $(this).val();
+            if (selection == 'yes') {
+                $('#hidden').show();
+            }
+            else {
+                $('#hidden').hide();
+            }
+        });
+
+        const submitBillableData = document.getElementById('submitBillableData');
+
+        submitBillableData.addEventListener('click',
+
+        async function SubmitBillableDatafunction(e) {
+            e.preventDefault();
+            let date = document.getElementById('date').value;
+            let hours = document.getElementById('hour').value;
+            let hidden;
+            if(hours!=="" && hours==="yes")
+            {
+                hidden = document.getElementById('hidden').value;
+            }
+            else{
+                hidden = hours;
+            }
+            console.log("got inside post " + emp + " " + val + " " + date + " " + hidden);
+            let fullData = {
+                "emp":emp,
+                "projectname" : val,
+                "date":date,
+                "hours":hidden
+            }
+
+            fetch('/submitBillableData', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    fullData
+                })
+
+            })
+
+            alert('Data Submitted Successfully');
+        }
+
+        )
+    </script>
+</body>
+
+</html>
